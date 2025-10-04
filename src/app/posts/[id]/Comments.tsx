@@ -30,10 +30,6 @@ export default function Comments({ postId }: CommentsProps) {
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState("");
 
-  useEffect(() => {
-    fetchComments();
-  }, [postId, fetchComments]);
-
   const fetchComments = useCallback(async () => {
     try {
       const res = await fetch(`/api/posts/${postId}/comments`);
@@ -47,6 +43,10 @@ export default function Comments({ postId }: CommentsProps) {
       setLoading(false);
     }
   }, [postId]);
+
+  useEffect(() => {
+    fetchComments();
+  }, [postId, fetchComments]);
 
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
