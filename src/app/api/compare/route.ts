@@ -406,7 +406,7 @@ Respond in JSON format:
 			...allKeywords,
 			...detectedTopics,
 			detectedLanguage,
-			...((codeAnalysis as any).concepts || [])
+			...(codeAnalysis && 'concepts' in codeAnalysis ? (codeAnalysis as { concepts: string[] }).concepts : [])
 		].filter(Boolean);
 
 		// Return top posts as expert comparisons using improved search
