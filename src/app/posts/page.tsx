@@ -92,7 +92,7 @@ export default async function PostsPage({ searchParams }: { searchParams: Promis
 									{p.title}
 								</h3>
 								<p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-									{p.description}
+									{p.summary}
 								</p>
 							</div>
 							<div className="flex items-center gap-2 ml-4">
