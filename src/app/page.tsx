@@ -345,7 +345,6 @@ export default function Home() {
                     </div>
                   )}
                   {r.complexity && <div className="mt-2 text-xs opacity-70">Complexity: {r.complexity}</div>}
-                  {r.eoRatio && <div className="mt-2 text-xs text-primary dark:text-primary">E/O Ratio: {r.eoRatio.toFixed(2)}</div>}
                   {r.referenceLink && (
                     <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
                       <a 
