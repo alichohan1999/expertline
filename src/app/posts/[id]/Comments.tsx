@@ -287,7 +287,7 @@ export default function Comments({ postId }: CommentsProps) {
                       {comment.children.map((reply) => (
                         <div key={reply.id} className="flex gap-3">
                           <ProfileImage
-                            src={reply.author.image}
+                            src={reply.author.image || null}
                             alt={reply.author.name}
                             className="w-6 h-6 rounded-full object-cover"
                             fallbackSrc="/default-avatar.svg"
