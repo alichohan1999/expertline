@@ -275,7 +275,7 @@ export default function Home() {
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-xl font-bold text-gray-900 dark:text-gray-100">{r.name || r.title}</h4>
+                        <h4 className="text-xl font-bold text-gray-900 dark:text-gray-100">{r.name}</h4>
                         <BaselineStatusIcon 
                           isBaseline={r.isBaseline}
                           size="md"
