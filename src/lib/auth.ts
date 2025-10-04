@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { type NextAuthOptions, type DefaultSession } from "next-auth";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -10,10 +10,7 @@ declare module "next-auth" {
 			id?: string;
 			role?: string;
 			username?: string;
-			name?: string | null;
-			email?: string | null;
-			image?: string | null;
-		};
+		} & DefaultSession["user"];
 	}
 }
 
@@ -27,7 +24,7 @@ declare module "next-auth/jwt" {
 
 
 // Export authOptions for use with getServerSession
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
 	// adapter: PrismaAdapter(prisma), // Temporarily disabled for debugging
 	providers: [
 		Google({
