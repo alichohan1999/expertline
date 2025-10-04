@@ -48,7 +48,7 @@ Stop searching endlessly for better code solutions. Expertline is your developer
 ### 1. Clone and Install
 
 ```bash
-git clone https://github.com/yourusername/expertline.git
+git clone https://github.com/alichohan1999/expertline.git
 cd expertline
 npm install
 ```
