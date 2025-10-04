@@ -159,7 +159,7 @@ export default async function TopicPostsPage({
                     <span className="font-medium">{p.oppose}</span>
                   </div>
                   <div className="text-xs text-primary dark:text-primary">
-                    E/O: {p.eoRatio?.toFixed(2) || 'N/A'}
+                    E/O: {(p.endorse / Math.max(p.oppose, 1)).toFixed(2)}
                   </div>
                 </div>
               </div>
