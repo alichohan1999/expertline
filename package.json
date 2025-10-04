@@ -25,6 +25,7 @@
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
     "eslint": "^9",
+    "eslint-config-next": "15.5.4",
     "ioredis": "^5.8.0",
     "lucide-react": "^0.544.0",
     "next": "15.5.4",
@@ -41,7 +42,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "eslint-config-next": "15.5.4",
     "ts-node": "^10.9.2"
   }
 }
