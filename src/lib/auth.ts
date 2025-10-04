@@ -7,10 +7,21 @@ import { prisma } from "@/lib/prisma";
 declare module "next-auth" {
 	interface Session {
 		user: {
-			id: string;
-			role: string;
-			username: string;
-		} & DefaultSession["user"];
+			id?: string;
+			role?: string;
+			username?: string;
+			name?: string | null;
+			email?: string | null;
+			image?: string | null;
+		};
+	}
+}
+
+declare module "next-auth/jwt" {
+	interface JWT {
+		id?: string;
+		role?: string;
+		username?: string;
 	}
 }
 
@@ -116,8 +127,8 @@ export const authOptions = {
 			return true;
 		},
 		async session({ session, token }: {
-			session: { user: { id?: string; name?: string; email?: string; image?: string } };
-			token: { sub?: string };
+			session: { user: { id?: string; name?: string | null; email?: string | null; image?: string | null } };
+			token: { sub?: string; id?: string; role?: string; username?: string };
 		}) {
 			// Add custom fields to session
 			if (session.user && token?.id) {
@@ -154,8 +165,8 @@ export const authOptions = {
 			return session;
 		},
 		async jwt({ token, user, account }: {
-			token: { id?: string };
-			user: { id: string } | null;
+			token: { id?: string; role?: string; username?: string };
+			user: { id: string; email?: string | null } | null;
 			account: { provider: string } | null;
 		}) {
 			// If user exists (first time signing in), get user data from database
