@@ -1,4 +1,4 @@
-import NextAuth, { DefaultSession } from "next-auth";
+import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -74,10 +74,7 @@ export const authOptions = {
 		})
 	],
 	callbacks: {
-		async signIn({ user, account }: {
-			user: { id: string; name?: string; email?: string; image?: string };
-			account: { provider: string } | null;
-		}) {
+		async signIn({ user, account, profile }) {
 			// For OAuth providers, manually handle user creation since we're not using PrismaAdapter
 			if (account?.provider === "google") {
 				try {
@@ -126,10 +123,7 @@ export const authOptions = {
 			}
 			return true;
 		},
-		async session({ session, token }: {
-			session: { user: { id?: string; name?: string | null; email?: string | null; image?: string | null } };
-			token: { sub?: string; id?: string; role?: string; username?: string };
-		}) {
+		async session({ session, token }) {
 			// Add custom fields to session
 			if (session.user && token?.id) {
 				try {
@@ -164,11 +158,7 @@ export const authOptions = {
 			}
 			return session;
 		},
-		async jwt({ token, user, account }: {
-			token: { id?: string; role?: string; username?: string };
-			user: { id: string; email?: string | null } | null;
-			account: { provider: string } | null;
-		}) {
+		async jwt({ token, user, account }) {
 			// If user exists (first time signing in), get user data from database
 			if (user && account) {
 				try {
