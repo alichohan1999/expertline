@@ -63,7 +63,7 @@ export default async function TopicsPage({ searchParams }: { searchParams: Promi
 								<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
 								</svg>
-								<span className="text-sm font-medium">{t.viewsCount || 0}</span>
+								<span className="text-sm font-medium">{t.postCount || 0}</span>
 							</div>
 						</div>
 						<div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-4">
