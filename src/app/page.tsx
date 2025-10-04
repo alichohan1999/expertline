@@ -168,10 +168,10 @@ export default function Home() {
                   {results.map((r, i) => (
                     <tr key={i} className="hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                       <td className="px-6 py-4 font-semibold text-gray-900 dark:text-gray-100">
-                        {r.name || r.title}
+                        {r.name}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
-                        {r.summary || r.description}
+                        {r.summary}
                       </td>
                       <td className="px-6 py-4 text-sm">
                         <div className="max-w-xs">

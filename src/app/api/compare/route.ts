@@ -393,10 +393,10 @@ Respond in JSON format:
 					detectedTopics = analysis.topics || [];
 					codeAnalysis = analysis;
 				}
-			} catch (parseError) {
+			} catch {
 				// Failed to parse AI analysis, using fallback
 			}
-		} catch (aiError) {
+		} catch {
 			// AI analysis failed, using fallback
 		}
 
