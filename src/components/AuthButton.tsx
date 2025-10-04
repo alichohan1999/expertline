@@ -20,7 +20,7 @@ export default function AuthButton() {
 			<div className="flex items-center gap-3">
 				<Link href="/profile" className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
 					<ProfileImage
-						src={session.user?.image}
+						src={session.user?.image || null}
 						alt="User Avatar"
 						className="w-8 h-8 rounded-full object-cover border border-gray-200 dark:border-gray-700"
 						fallbackSrc="/default-avatar.svg"

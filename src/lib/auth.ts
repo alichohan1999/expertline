@@ -77,7 +77,7 @@ export const authOptions: NextAuthOptions = {
 				try {
 					// Check if user exists by email
 					const existingUser = await prisma.user.findUnique({
-						where: { email: user.email }
+						where: { email: user.email || undefined }
 					});
 
 					if (!existingUser) {
@@ -130,7 +130,7 @@ export const authOptions: NextAuthOptions = {
 					
 					if (dbUser) {
 						session.user.id = dbUser.id;
-						session.user.username = dbUser.username;
+						session.user.username = dbUser.username || undefined;
 						session.user.role = dbUser.role;
 						session.user.image = dbUser.image; // Ensure image is set from database
 					} else {
@@ -144,7 +144,7 @@ export const authOptions: NextAuthOptions = {
 								session.user.name = userByEmail.name;
 								session.user.email = userByEmail.email;
 								session.user.image = userByEmail.image;
-								session.user.username = userByEmail.username;
+								session.user.username = userByEmail.username || undefined;
 								session.user.role = userByEmail.role;
 							}
 						}
@@ -160,12 +160,12 @@ export const authOptions: NextAuthOptions = {
 			if (user && account) {
 				try {
 					const dbUser = await prisma.user.findUnique({
-						where: { email: user.email }
+						where: { email: user.email || undefined }
 					});
 					
 					if (dbUser) {
 						token.id = dbUser.id;
-						token.username = dbUser.username;
+						token.username = dbUser.username || undefined;
 						token.role = dbUser.role;
 					}
 				} catch (error) {
@@ -180,7 +180,6 @@ export const authOptions: NextAuthOptions = {
 	},
 	pages: {
 		signIn: "/auth/signin",
-		signUp: "/auth/signup",
 	},
 	debug: process.env.NODE_ENV === "development",
 	secret: process.env.NEXTAUTH_SECRET,
