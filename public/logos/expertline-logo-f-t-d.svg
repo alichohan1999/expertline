@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1000">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #00ade6;
+      }
+
+      .cls-2 {
+        font-family: CenturyGothic, 'Century Gothic';
+        font-size: 210.8px;
+      }
+    </style>
+  </defs>
+  <g>
+    <rect class="cls-1" x="567.57" y="319.63" width="125.48" height="250.96"/>
+    <rect class="cls-1" x="410.72" y="382.36" width="125.48" height="188.22"/>
+    <rect class="cls-1" x="253.88" y="445.1" width="125.48" height="125.48"/>
+    <rect class="cls-1" x="457.78" y="382.36" width="31.37" height="439.17" transform="translate(-128.49 1075.41) rotate(-90)"/>
+    <rect class="cls-1" x="410.72" y="586.27" width="125.48" height="94.11"/>
+  </g>
+  <text class="cls-2" transform="translate(774.07 558.22)"><tspan x="0" y="0">Expertline</tspan></text>
+</svg>

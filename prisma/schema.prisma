@@ -1,0 +1,211 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// -----------------------------
+// Auth & RBAC
+// -----------------------------
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  username      String?   @unique
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  // RBAC
+  role Role @default(USER)
+
+  // Profile
+  bio      String?
+  password String? // For credentials login
+
+  // Relations
+  accounts Account[]
+  sessions Session[]
+  posts    Post[]
+  comments Comment[]
+  votes    Vote[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// -----------------------------
+// Core domain
+// -----------------------------
+
+model Topic {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  // Derived from top posts. Store up to 10 subtopics.
+  subTopics  String[]
+  // Analytics summary info
+  info       String?
+  postIds    String[]
+  numPosts   Int      @default(0)
+  viewsCount Int      @default(0)
+  isOfficial Boolean  @default(false)
+
+  posts Post[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TopicRequest {
+  id          String        @id @default(cuid())
+  topicKey    String // normalized key derived from code/title/categories
+  exampleCode String? // representative code snippet
+  count       Int           @default(1)
+  status      RequestStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([topicKey])
+}
+
+enum RequestStatus {
+  PENDING
+  SUGGESTED // count >= 20, show in Explore Topics
+  FULFILLED
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  // 1) Code Block (required)
+  code        String
+  // 2) Title (required)
+  title       String
+  // 3) Categories (required, up to 3)
+  categories  String[]
+  // 4) Topic (optional)
+  topicId     String?
+  topic       Topic?    @relation(fields: [topicId], references: [id])
+  // 5) SubTopics (optional, up to 5)
+  subTopics   String[]
+  // 6) Description (required)
+  description String
+  // 7) Endorse
+  endorse     Int       @default(0)
+  // 8) Oppose
+  oppose      Int       @default(0)
+  // 9) Stored analytics for quick sort/filter
+  eoRatio     Float     @default(0)
+  endorseRate Float     @default(0)
+  // 10) Baseline status - indicates if this is the baseline/reference implementation
+  isBaseline  Boolean   @default(false)
+  // 11) Username (string reference + direct relation to User)
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id])
+  username    String
+  // 12) Comments
+  comments    Comment[]
+  // 13) Votes
+  votes       Vote[]
+  // 14-15) Timestamps
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([topicId])
+  @@index([eoRatio])
+  @@index([endorseRate])
+  @@index([username])
+  @@index([isBaseline])
+}
+
+model Comment {
+  id       String    @id @default(cuid())
+  postId   String
+  post     Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content  String
+  parentId String?
+  // Self-relation for threaded comments
+  parent   Comment?  @relation("CommentToComment", fields: [parentId], references: [id])
+  children Comment[] @relation("CommentToComment")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([postId])
+  @@index([authorId])
+  @@index([parentId])
+}
+
+enum VoteType {
+  ENDORSE
+  OPPOSE
+}
+
+model Vote {
+  id       String   @id @default(cuid())
+  postId   String
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  voteType VoteType
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([postId, userId])
+  @@index([postId])
+  @@index([userId])
+}
