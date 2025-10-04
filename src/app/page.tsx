@@ -281,7 +281,7 @@ export default function Home() {
                           size="md"
                         />
                       </div>
-                      <p className="text-gray-600 dark:text-gray-400">{r.summary || r.description}</p>
+                      <p className="text-gray-600 dark:text-gray-400">{r.summary}</p>
                     </div>
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                       r.complexity === 'low' ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' :
