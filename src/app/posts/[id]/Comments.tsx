@@ -298,7 +298,7 @@ export default function Comments({ postId }: CommentsProps) {
                                 {reply.author.name}
                               </span>
                               <span className="text-xs text-gray-500 dark:text-gray-400">
-                                @{typeof reply.author.username === 'string' ? reply.author.username : reply.author.username?.username || 'anonymous'}
+                                @{reply.author.username || 'anonymous'}
                               </span>
                               <span className="text-xs text-gray-400 dark:text-gray-500">
                                 • {formatDate(reply.createdAt)}
