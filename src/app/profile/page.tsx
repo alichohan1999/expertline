@@ -178,7 +178,7 @@ export default async function ProfilePage() {
                   {userLevel.level}
                 </span>
               </div>
-              <p className="text-lg text-gray-600 dark:text-gray-400">@{typeof user.username === 'string' ? user.username : user.username?.username || "anonymous"}</p>
+              <p className="text-lg text-gray-600 dark:text-gray-400">@{user.username || "anonymous"}</p>
               <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
                 Joined {new Date(user.createdAt).toLocaleDateString('en-US', { 
                   year: 'numeric', 
