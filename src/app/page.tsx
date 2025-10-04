@@ -178,7 +178,7 @@ export default function Home() {
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Code</span>
                             <button
-                              onClick={() => copyToClipboard(r.codeBlock || r.code || originalCode, i)}
+                              onClick={() => copyToClipboard(r.codeBlock || originalCode, i)}
                               className="flex items-center gap-1 px-2 py-1 text-xs bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
                             >
                               {copiedIndex === i ? (
