@@ -461,6 +461,13 @@ Respond in JSON format:
 					where: { OR: searchConditions },
 					orderBy: [{ eoRatio: "desc" }, { createdAt: "desc" }],
 					take: maxAlternatives,
+					include: {
+						author: {
+							select: {
+								username: true
+							}
+						}
+					}
 				});
 			}
 		}
@@ -473,7 +480,7 @@ Respond in JSON format:
 			if (code.includes('return')) codePatterns.push('return');
 			
 			if (codePatterns.length > 0) {
-				posts = await prisma.post.findMany({
+				rawPosts = await prisma.post.findMany({
 					where: {
 						OR: codePatterns.map(pattern => ({ 
 							code: { contains: pattern, mode: "insensitive" as const } 
@@ -481,6 +488,13 @@ Respond in JSON format:
 					},
 					orderBy: [{ eoRatio: "desc" }],
 					take: maxAlternatives,
+					include: {
+						author: {
+							select: {
+								username: true
+							}
+						}
+					}
 				});
 			}
 		}
