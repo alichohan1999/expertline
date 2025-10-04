@@ -71,7 +71,7 @@ export const authOptions: NextAuthOptions = {
 		})
 	],
 	callbacks: {
-		async signIn({ user, account, profile }) {
+		async signIn({ user, account }) {
 			// For OAuth providers, manually handle user creation since we're not using PrismaAdapter
 			if (account?.provider === "google") {
 				try {
