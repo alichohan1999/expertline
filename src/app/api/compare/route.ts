@@ -418,8 +418,10 @@ Respond in JSON format:
 			categories: string[];
 			endorse: number;
 			oppose: number;
+			eoRatio: number;
+			isBaseline: boolean;
 			author: {
-				username: string;
+				username: string | null;
 			};
 			createdAt: Date;
 			updatedAt: Date;
@@ -868,7 +870,10 @@ IMPORTANT:
 						pros: pros,
 						cons: cons,
 						complexity: complexity,
-						codeBlock: codeBlock
+						codeBlock: codeBlock,
+						referenceLink: getExternalReferenceLink(title, code, generatedAlternatives.length),
+						referenceType: "external",
+						isBaseline: generatedAlternatives.length === 0
 					});
 				}
 				
@@ -889,7 +894,10 @@ IMPORTANT:
 								pros: ["AI-generated approach", "Working code example"],
 								cons: ["Consider your specific needs"],
 								complexity: "med",
-								codeBlock: codeContent
+								codeBlock: codeContent,
+								referenceLink: getExternalReferenceLink(`AI Alternative ${i + 1}`, code, i),
+								referenceType: "external",
+								isBaseline: i === 0
 							});
 						}
 					}
@@ -923,7 +931,10 @@ IMPORTANT:
 						for (let i = 0; i < Math.min(approaches.length, maxAlternatives); i++) {
 							generatedAlternatives.push({
 								...approaches[i],
-								codeBlock: code
+								codeBlock: code,
+								referenceLink: getExternalReferenceLink(approaches[i].name, code, i),
+								referenceType: "external",
+								isBaseline: i === 0
 							});
 						}
 					}
@@ -1029,7 +1040,8 @@ IMPORTANT:
 					complexity: "med",
 					codeBlock: `// Iterative version to replace recursion\n// Convert recursive calls to loops\n${code}\n\n// Implementation strategy:\n// - Use loops instead of recursive calls\n// - Maintain state with variables\n// - Avoid stack overflow issues`,
 					referenceLink: getExternalReferenceLink("Iterative Approach", code, 3),
-					referenceType: "external"
+					referenceType: "external",
+					isBaseline: false
 				});
 			}
 			
@@ -1042,7 +1054,8 @@ IMPORTANT:
 					complexity: "med",
 					codeBlock: `// Functional programming approach\n// Using map, filter, reduce, etc.\n${code}\n\n// Functional alternatives:\n// - Use array methods instead of loops\n// - Implement pure functions\n// - Avoid side effects`,
 					referenceLink: getExternalReferenceLink("Functional Approach", code, 4),
-					referenceType: "external"
+					referenceType: "external",
+					isBaseline: false
 				});
 			}
 			
@@ -1055,7 +1068,8 @@ IMPORTANT:
 					complexity: "high",
 					codeBlock: `// Advanced algorithm implementation\n// Optimized for performance and edge cases\n${code}\n\n// Advanced techniques:\n// - Better time/space complexity\n// - Handle edge cases\n// - Optimize for large datasets`,
 					referenceLink: getExternalReferenceLink("Advanced Algorithm", code, 5),
-					referenceType: "external"
+					referenceType: "external",
+					isBaseline: false
 				});
 			}
 			
@@ -1070,7 +1084,8 @@ IMPORTANT:
 					complexity: "med",
 					codeBlock: `// Alternative ${index + 1} implementation\n// Different approach to solve the same problem\n${code}\n\n// This approach focuses on:\n// - Alternative problem-solving method\n// - Different trade-offs\n// - Unique implementation strategy`,
 					referenceLink: getExternalReferenceLink(`Alternative ${index + 1}`, code, index),
-					referenceType: "external"
+					referenceType: "external",
+					isBaseline: false
 				});
 			}
 			
