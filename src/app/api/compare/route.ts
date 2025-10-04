@@ -410,18 +410,7 @@ Respond in JSON format:
 		].filter(Boolean);
 
 		// Return top posts as expert comparisons using improved search
-		let posts: Array<{
-			id: string;
-			title: string;
-			summary: string;
-			pros: string[];
-			cons: string[];
-			complexity: string;
-			codeBlock: string;
-			referenceLink: string;
-			referenceType: string;
-			isBaseline: boolean;
-		}> = [];
+		let rawPosts: any[] = [];
 		
 		if (enhancedKeywords.length > 0) {
 			// Priority search: algorithm patterns first, then tech keywords
@@ -453,7 +442,7 @@ Respond in JSON format:
 			}
 			
 			if (searchConditions.length > 0) {
-				posts = await prisma.post.findMany({
+				rawPosts = await prisma.post.findMany({
 					where: { OR: searchConditions },
 					orderBy: [{ eoRatio: "desc" }, { createdAt: "desc" }],
 					take: maxAlternatives,
@@ -462,7 +451,7 @@ Respond in JSON format:
 		}
 		
 		// If still no good matches, try pattern-based search
-		if (posts.length === 0) {
+		if (rawPosts.length === 0) {
 			const codePatterns = [];
 			if (code.includes('function')) codePatterns.push('function');
 			if (code.includes('=>')) codePatterns.push('=>');
@@ -481,7 +470,7 @@ Respond in JSON format:
 			}
 		}
 		// If no relevant posts found, create a topic request
-		if (posts.length === 0) {
+		if (rawPosts.length === 0) {
 			const topicKey = `${detectedLanguage}-${detectedTopics.join('-')}`.toLowerCase().replace(/[^a-z0-9-]/g, '-');
 			
 			// Check if topic request already exists
@@ -511,7 +500,7 @@ Respond in JSON format:
 		}
 
 		// Add post links to expert results and map to expected structure
-		const postsWithLinks = posts.map(post => {
+		const postsWithLinks = rawPosts.map(post => {
 			// Generate pros based on categories and E/O ratio
 			const pros = [];
 			if (post.categories?.includes('performance')) pros.push('Optimized for performance');
