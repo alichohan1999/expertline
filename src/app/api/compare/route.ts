@@ -392,13 +392,12 @@ Respond in JSON format:
 					detectedLanguage = analysis.language || "javascript";
 					detectedTopics = analysis.topics || [];
 					codeAnalysis = analysis;
-					console.log(`🔍 AI Analysis: Language=${detectedLanguage}, Topics=${detectedTopics.join(', ')}`);
 				}
 			} catch (parseError) {
-				console.warn("Failed to parse AI analysis:", parseError);
+				// Failed to parse AI analysis, using fallback
 			}
 		} catch (aiError) {
-			console.warn("AI analysis failed, using fallback:", aiError);
+			// AI analysis failed, using fallback
 		}
 
 		// Enhanced search terms combining AI analysis with existing keywords
@@ -519,14 +518,12 @@ Respond in JSON format:
 						status: "PENDING"
 					}
 				});
-				console.log(`📝 Created topic request for: ${topicKey}`);
 			} else {
 				// Increment existing request count
 				await prisma.topicRequest.update({
 					where: { id: existingRequest.id },
 					data: { count: { increment: 1 } }
 				});
-				console.log(`📈 Incremented topic request count for: ${topicKey}`);
 			}
 		}
 
@@ -769,12 +766,10 @@ IMPORTANT:
 				const responseText = content;
 				const generatedAlternatives = [];
 				
-				console.log("🔍 Raw AI Response:", responseText.substring(0, 500) + "...");
 				
 				// Split response into sections by ### pattern
 				const sections = responseText.split(/### \d+\./).filter(section => section.trim());
 				
-				console.log(`📊 Found ${sections.length} sections`);
 				
 				for (let i = 0; i < Math.min(sections.length, maxAlternatives); i++) {
 					const section = sections[i].trim();
@@ -810,11 +805,6 @@ IMPORTANT:
 						codeBlock = code;
 					}
 					
-					console.log(`📝 Alternative ${i + 1}:`, {
-						title: title.substring(0, 50),
-						description: description.substring(0, 100),
-						codeLength: codeBlock.length
-					});
 					
 					// Generate intelligent pros/cons based on content analysis
 					const contentText = (title + ' ' + description + ' ' + codeBlock).toLowerCase();
@@ -879,7 +869,6 @@ IMPORTANT:
 				
 				// If no structured alternatives found, create intelligent fallbacks
 				if (generatedAlternatives.length === 0) {
-					console.log("⚠️ No structured alternatives found, creating fallbacks");
 					
 					// Try to extract any code blocks from the response
 					const codeBlocks = responseText.match(/```(?:javascript|js)?\n([\s\S]*?)\n```/g);
