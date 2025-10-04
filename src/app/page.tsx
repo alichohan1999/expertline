@@ -200,8 +200,8 @@ export default function Home() {
                           </div>
                           <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-3 max-h-32 overflow-y-auto border border-gray-300 dark:border-gray-600">
                             <pre className="text-xs font-mono text-gray-100 whitespace-pre-wrap">
-                              {(r.codeBlock || r.code || originalCode).slice(0, 200)}
-                              {(r.codeBlock || r.code || originalCode).length > 200 && '...'}
+                              {(r.codeBlock || originalCode).slice(0, 200)}
+                              {(r.codeBlock || originalCode).length > 200 && '...'}
                             </pre>
                           </div>
                         </div>
@@ -297,7 +297,7 @@ export default function Home() {
                     <div className="flex items-center justify-between mb-2">
                       <h5 className="font-medium text-sm">Code Example</h5>
                       <button
-                        onClick={() => copyToClipboard(r.codeBlock || r.code || originalCode, i)}
+                        onClick={() => copyToClipboard(r.codeBlock || originalCode, i)}
                         className="flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors"
                       >
                         {copiedIndex === i ? (
@@ -319,7 +319,7 @@ export default function Home() {
                     </div>
                     <div className="bg-gray-100 dark:bg-gray-800 rounded p-4">
                       <pre className="text-sm font-mono whitespace-pre-wrap overflow-x-auto">
-                        {r.codeBlock || r.code || originalCode}
+                        {r.codeBlock || originalCode}
                       </pre>
                     </div>
                   </div>
