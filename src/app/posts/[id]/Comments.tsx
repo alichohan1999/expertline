@@ -210,7 +210,7 @@ export default function Comments({ postId }: CommentsProps) {
             <div key={comment.id} className="border-b border-gray-200 dark:border-gray-700 pb-6 last:border-b-0">
               <div className="flex gap-3">
                 <ProfileImage
-                  src={comment.author.image}
+                  src={comment.author.image || null}
                   alt={comment.author.name}
                   className="w-8 h-8 rounded-full object-cover"
                   fallbackSrc="/default-avatar.svg"
