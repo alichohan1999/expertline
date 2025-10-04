@@ -63,10 +63,9 @@ export const authOptions = {
 		})
 	],
 	callbacks: {
-		async signIn({ user, account, profile }: {
+		async signIn({ user, account }: {
 			user: { id: string; name?: string; email?: string; image?: string };
 			account: { provider: string } | null;
-			profile: { name?: string; email?: string; picture?: string } | null;
 		}) {
 			// For OAuth providers, manually handle user creation since we're not using PrismaAdapter
 			if (account?.provider === "google") {
@@ -194,7 +193,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
 export function requireRole(roles: string[]) {
 	return async () => {
 		const session = await auth();
-		if (!session || !session.user || !roles.includes((session.user as any).role)) {
+		if (!session || !session.user || !roles.includes((session.user as { role?: string }).role || '')) {
 			return null;
 		}
 		return session;

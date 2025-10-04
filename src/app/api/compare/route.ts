@@ -286,7 +286,6 @@ export async function POST(req: NextRequest) {
 
 	// Expertline Mode: try to find relevant posts by keywords with weighted scoring
 	let hasExpertData = 0;
-	const relevantPosts = [];
 	
 	if (allKeywords.length > 0) {
 		// Priority search: algorithm patterns first, then tech keywords
@@ -740,7 +739,7 @@ IMPORTANT:
 				const result = await Promise.race([
 					model.generateContent(prompt),
 					timeoutPromise
-				]) as any;
+				]) as { response: { text: () => string } };
 				
 				// Get the text content
 				let content = result.response.text();
@@ -919,7 +918,7 @@ IMPORTANT:
 					break;
 				}
 				
-			} catch (error: unknown) {
+			} catch {
 				// Gemini API failed, will use fallback alternatives
 			}
 		}

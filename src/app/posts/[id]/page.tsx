@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 import CopyButton from "./CopyButton";
 import PostActions from "./PostActions";

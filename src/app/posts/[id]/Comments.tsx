@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSession, signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import ProfileImage from "@/components/ProfileImage";
@@ -34,7 +34,7 @@ export default function Comments({ postId }: CommentsProps) {
     fetchComments();
   }, [postId, fetchComments]);
 
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
       const res = await fetch(`/api/posts/${postId}/comments`);
       if (res.ok) {
@@ -46,7 +46,7 @@ export default function Comments({ postId }: CommentsProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [postId]);
 
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();

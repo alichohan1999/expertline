@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface ProfileImageProps {
   src: string | null;
@@ -36,11 +37,13 @@ export default function ProfileImage({
   };
 
   return (
-    <img
+    <Image
       src={imageSrc}
       alt={alt}
       className={className}
       onError={handleError}
+      width={40}
+      height={40}
       crossOrigin="anonymous"
       referrerPolicy="no-referrer"
     />

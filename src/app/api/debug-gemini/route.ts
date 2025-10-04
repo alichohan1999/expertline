@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getGeminiAI } from "@/lib/gemini";
 
 export async function GET() {
