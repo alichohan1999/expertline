@@ -120,11 +120,11 @@ export default async function TopicPostsPage({
               </div>
               <div className="flex items-center gap-2 ml-4">
                 <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                  p.eoRatio > 2 ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' :
-                  p.eoRatio > 1 ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' :
+                  (p.endorse / Math.max(p.oppose, 1)) > 2 ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' :
+                  (p.endorse / Math.max(p.oppose, 1)) > 1 ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' :
                   'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300'
                 }`}>
-                  {p.eoRatio > 2 ? 'Highly Endorsed' : p.eoRatio > 1 ? 'Mixed' : 'Controversial'}
+                  {(p.endorse / Math.max(p.oppose, 1)) > 2 ? 'Highly Endorsed' : (p.endorse / Math.max(p.oppose, 1)) > 1 ? 'Mixed' : 'Controversial'}
                 </span>
               </div>
             </div>
