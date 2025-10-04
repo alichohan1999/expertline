@@ -19,7 +19,6 @@ export default function BaselineStatusIcon({
     lg: 'w-6 h-6'
   };
 
-  const iconSize = sizeClasses[size];
 
   // Determine the badge based on status
   if (isBaseline || status === 'baseline') {

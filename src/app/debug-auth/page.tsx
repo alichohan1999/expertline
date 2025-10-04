@@ -4,7 +4,14 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function DebugAuthPage() {
   const { data: session, status } = useSession();
-  const [apiSession, setApiSession] = useState<any>(null);
+  const [apiSession, setApiSession] = useState<{
+    user?: {
+      id: string;
+      name?: string;
+      email?: string;
+      image?: string;
+    };
+  } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -65,7 +65,12 @@ async function getUserStats(userId: string) {
   };
 }
 
-function calculateUserLevel(stats: any) {
+function calculateUserLevel(stats: {
+  totalPosts: number;
+  totalComments: number;
+  totalVotes: number;
+  receivedEndorsements: number;
+}) {
   const { totalPosts, totalComments, totalVotes, receivedEndorsements } = stats;
   
   // Calculate level based on activity and engagement

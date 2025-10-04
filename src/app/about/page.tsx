@@ -1,4 +1,5 @@
 import NextImage from "next/image";
+import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -152,21 +153,21 @@ export default function AboutPage() {
               Join Our Community
             </h2>
             <p className="text-foreground mb-8 max-w-2xl mx-auto">
-              Expertline is more than just a platform—it's a community of developers helping each other grow. Share your knowledge, learn from others, and contribute to the collective wisdom of the developer community.
+              Expertline is more than just a platform—it&apos;s a community of developers helping each other grow. Share your knowledge, learn from others, and contribute to the collective wisdom of the developer community.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
+              <Link
                 href="/auth/signup"
                 className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-primary-foreground bg-primary hover:bg-primary-hover dark:bg-primary dark:bg-primary-hover dark:text-primary-foreground transition-all transform hover:scale-105 shadow-md hover:shadow-lg"
               >
                 Get Started
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/posts"
                 className="inline-flex items-center px-6 py-3 border border-border text-base font-medium rounded-lg text-foreground bg-background hover:bg-background-secondary transition-colors"
               >
                 Explore Posts
-              </a>
+              </Link>
             </div>
           </div>
         </div>

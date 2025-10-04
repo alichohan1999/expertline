@@ -286,7 +286,7 @@ export async function POST(req: NextRequest) {
 
 	// Expertline Mode: try to find relevant posts by keywords with weighted scoring
 	let hasExpertData = 0;
-	let relevantPosts = [];
+	const relevantPosts = [];
 	
 	if (allKeywords.length > 0) {
 		// Priority search: algorithm patterns first, then tech keywords
@@ -411,7 +411,18 @@ Respond in JSON format:
 		].filter(Boolean);
 
 		// Return top posts as expert comparisons using improved search
-		let posts: any[] = [];
+		let posts: Array<{
+			id: string;
+			title: string;
+			summary: string;
+			pros: string[];
+			cons: string[];
+			complexity: string;
+			codeBlock: string;
+			referenceLink: string;
+			referenceType: string;
+			isBaseline: boolean;
+		}> = [];
 		
 		if (enhancedKeywords.length > 0) {
 			// Priority search: algorithm patterns first, then tech keywords
@@ -647,7 +658,17 @@ Respond in JSON format:
 		// Using gemini-2.5-flash model (confirmed working)
 		// Try Gemini with retry mechanism
 		let geminiSuccess = false;
-		let alternatives: any[] = [];
+		let alternatives: Array<{
+			name: string;
+			summary: string;
+			pros: string[];
+			cons: string[];
+			complexity: string;
+			codeBlock: string;
+			referenceLink: string;
+			referenceType: string;
+			isBaseline: boolean;
+		}> = [];
 		
 		for (let attempt = 1; attempt <= 2; attempt++) {
 			try {
@@ -898,7 +919,7 @@ IMPORTANT:
 					break;
 				}
 				
-			} catch (error: any) {
+			} catch (error: unknown) {
 				// Gemini API failed, will use fallback alternatives
 			}
 		}
@@ -1060,7 +1081,17 @@ IMPORTANT:
 		alternatives = alternatives.slice(0, maxAlternatives);
 
 		// Add external reference links to AI results and ensure code examples are valid
-		const alternativesWithLinks = alternatives.map((alt: any, index: number) => {
+		const alternativesWithLinks = alternatives.map((alt: {
+			name: string;
+			summary: string;
+			pros: string[];
+			cons: string[];
+			complexity: string;
+			codeBlock: string;
+			referenceLink: string;
+			referenceType: string;
+			isBaseline: boolean;
+		}, index: number) => {
 			// Determine baseline status based on content analysis
 			let isBaseline = false;
 			

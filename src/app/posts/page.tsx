@@ -67,7 +67,20 @@ export default async function PostsPage({ searchParams }: { searchParams: Promis
 			</div>
 			
 			<div className="grid gap-6">
-				{items.map((p: any) => (
+				{items.map((p: {
+					id: string;
+					title: string;
+					summary: string;
+					author: {
+						username: string;
+					};
+					createdAt: string;
+					endorse: number;
+					oppose: number;
+					topics: Array<{
+						name: string;
+					}>;
+				}) => (
 					<Link 
 						key={p.id} 
 						href={`/posts/${p.id}`}

@@ -1,8 +1,7 @@
 "use client";
 import NextImage from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import toast from "react-hot-toast";
-import RealtimeBaselineStatus from "@/components/RealtimeBaselineStatus";
 import BaselineStatusIcon from "@/components/BaselineStatusIcon";
 
 export default function Home() {
@@ -10,7 +9,17 @@ export default function Home() {
   const [details, setDetails] = useState("");
   const [mode, setMode] = useState<"expert" | "ai">("expert");
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<Array<{
+    name: string;
+    summary: string;
+    pros: string[];
+    cons: string[];
+    complexity: string;
+    codeBlock: string;
+    referenceLink: string;
+    referenceType: string;
+    isBaseline: boolean;
+  }>>([]);
   const [originalCode, setOriginalCode] = useState("");
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [showResults, setShowResults] = useState(false);

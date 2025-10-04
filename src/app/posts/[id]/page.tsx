@@ -35,7 +35,7 @@ async function getPost(id: string) {
 
 export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
   const post = await getPost(id);
 
   if (!post) {

@@ -93,7 +93,17 @@ export default async function TopicPostsPage({
       </div>
       
       <div className="grid gap-6">
-        {items.map((p: any) => (
+        {items.map((p: {
+          id: string;
+          title: string;
+          summary: string;
+          author: {
+            username: string;
+          };
+          createdAt: string;
+          endorse: number;
+          oppose: number;
+        }) => (
           <Link 
             key={p.id} 
             href={`/posts/${p.id}`}

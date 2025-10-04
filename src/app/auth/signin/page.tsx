@@ -35,7 +35,7 @@ export default function SignInPage() {
         router.push("/");
         router.refresh();
       }
-    } catch (error) {
+    } catch {
       setError("An error occurred. Please try again.");
       toast.error("An error occurred. Please try again.");
     } finally {
@@ -47,7 +47,7 @@ export default function SignInPage() {
     setLoading(true);
     try {
       await signIn("google", { callbackUrl: "/" });
-    } catch (error) {
+    } catch {
       setError("An error occurred with Google sign-in");
       toast.error("An error occurred with Google sign-in");
       setLoading(false);

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGeminiAI } from "@/lib/gemini";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
 	const debugInfo = {
 		apiKeyExists: !!process.env.GOOGLE_GEMINI_API_KEY,
 		apiKeyPreview: process.env.GOOGLE_GEMINI_API_KEY ? 
@@ -13,8 +13,8 @@ export async function GET(req: NextRequest) {
 
 	try {
 		// Check if .env file exists
-		const fs = require('fs');
-		const path = require('path');
+		const fs = await import('fs');
+		const path = await import('path');
 		const envPath = path.join(process.cwd(), '.env');
 		debugInfo.envFileExists = fs.existsSync(envPath);
 
@@ -40,11 +40,11 @@ export async function GET(req: NextRequest) {
 					response: content,
 					responseLength: content.length
 				};
-			} catch (geminiError: any) {
+			} catch (geminiError: unknown) {
 				debugInfo.geminiTest = {
 					success: false,
-					error: geminiError.message,
-					errorType: geminiError.constructor.name
+					error: geminiError instanceof Error ? geminiError.message : 'Unknown error',
+					errorType: geminiError instanceof Error ? geminiError.constructor.name : 'Unknown'
 				};
 			}
 		}
@@ -54,11 +54,11 @@ export async function GET(req: NextRequest) {
 			message: "Gemini API diagnostic complete"
 		});
 
-	} catch (error: any) {
-		debugInfo.error = error.message;
+	} catch (error: unknown) {
+		debugInfo.error = error instanceof Error ? error.message : 'Unknown error';
 		return NextResponse.json({
 			debug: debugInfo,
-			error: error.message
+			error: error instanceof Error ? error.message : 'Unknown error'
 		}, { status: 500 });
 	}
 }

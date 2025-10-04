@@ -32,7 +32,7 @@ export default function Comments({ postId }: CommentsProps) {
 
   useEffect(() => {
     fetchComments();
-  }, [postId]);
+  }, [postId, fetchComments]);
 
   const fetchComments = async () => {
     try {

@@ -48,7 +48,12 @@ export default async function TopicsPage({ searchParams }: { searchParams: Promi
 			</div>
 			
 			<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{items.map((t: any) => (
+				{items.map((t: {
+					id: string;
+					name: string;
+					description: string;
+					postCount: number;
+				}) => (
 					<div key={t.id} className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
 						<div className="flex items-start justify-between mb-4">
 							<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">

@@ -81,7 +81,7 @@ export default function TermsPage() {
                 5. Disclaimers
               </h2>
               <p className="text-gray-700 dark:text-gray-300 mb-4">
-                The information on this website is provided on an "as is" basis. To the fullest extent permitted by law, Expertline excludes all representations, warranties, conditions and terms.
+                The information on this website is provided on an &quot;as is&quot; basis. To the fullest extent permitted by law, Expertline excludes all representations, warranties, conditions and terms.
               </p>
             </section>
 

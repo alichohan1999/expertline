@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
 	}
 
-	const authorId = (session.user as any).id as string;
+	const authorId = (session.user as { id: string }).id;
 	const username = session.user?.name ?? "user";
 
 	const data = parsed.data;

@@ -82,7 +82,7 @@ export default function SignUpPage() {
         setError(data.error || "Registration failed");
         toast.error(data.error || "Registration failed");
       }
-    } catch (error) {
+    } catch {
       setError("An error occurred. Please try again.");
       toast.error("An error occurred. Please try again.");
     } finally {
@@ -94,7 +94,7 @@ export default function SignUpPage() {
     setLoading(true);
     try {
       await signIn("google", { callbackUrl: "/" });
-    } catch (error) {
+    } catch {
       setError("An error occurred with Google sign-in");
       toast.error("An error occurred with Google sign-in");
       setLoading(false);
