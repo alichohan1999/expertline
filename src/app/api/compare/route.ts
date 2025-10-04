@@ -410,7 +410,22 @@ Respond in JSON format:
 		].filter(Boolean);
 
 		// Return top posts as expert comparisons using improved search
-		let rawPosts: any[] = [];
+		let rawPosts: Array<{
+			id: string;
+			title: string;
+			description: string;
+			code: string;
+			categories: string[];
+			endorse: number;
+			oppose: number;
+			author: {
+				username: string;
+			};
+			createdAt: Date;
+			updatedAt: Date;
+			authorId: string;
+			subTopics: string[];
+		}> = [];
 		
 		if (enhancedKeywords.length > 0) {
 			// Priority search: algorithm patterns first, then tech keywords
